@@ -9,7 +9,7 @@ class Game:
     def __init__(self,
                  player1: Player,
                  player2: Player,
-                 reward_matrix,
+                 point_matrix,
                  num_turns):
         
         self.player1 = player1
@@ -17,7 +17,7 @@ class Game:
         self.player_list = [self.player1, self.player2]
         self.player1_moves = []
         self.player2_moves = []
-        self.reward_matrix = reward_matrix
+        self.point_matrix = point_matrix
         self.num_turns = num_turns
         self.score = np.zeros(2)
 
@@ -28,7 +28,7 @@ class Game:
         player1_move = self.player1.do_turn(self.player2_moves)
         player2_move = self.player2.do_turn(self.player1_moves)
         # update score from reward matrix
-        self.score += self.reward_matrix[player1_move, player2_move]
+        self.score += self.point_matrix[player1_move, player2_move]
         # update history of player moves
         self.player1_moves.append(player1_move)
         self.player2_moves.append(player2_move)
@@ -41,9 +41,10 @@ class Game:
 
     # get winner and loser of game
     def tally_score(self, print_results=False):
+        
         # update players total scores
-        for player, score_val in zip(self.player_list, self.score):
-            player.total_score += score_val
+        for player, points in zip(self.player_list, self.score):
+            player.total_points += points
     
         # check for a tie
         tie = self.score[0] == self.score[1]
@@ -52,7 +53,7 @@ class Game:
             self.player2.tie_count += 1
             if print_results:
                 print(f'{self.player1.name} tied {self.player2.name}.')
-                print(f'score = {np.sort(self.score)}')
+                print(f'score = {self.score}')
             
         # not a tie
         else:
