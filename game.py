@@ -1,6 +1,7 @@
 '''Rules for prisoner's dilemma game.'''
 
 import numpy as np
+import pandas as pd
 from player import Player
 
 
@@ -66,4 +67,12 @@ class Game:
             if print_results:
                 print(f'{winner.name} defeated {loser.name}.')
                 print(f'score = {np.sort(self.score)[::-1]}.')
+
+    # get score board after game in pandas.DataFrame type
+    def get_score_board(self):
+        row1 = [self.player1.name, self.score[0]] + self.player1_moves
+        row2 = [self.player2.name, self.score[1]] + self.player2_moves
+        df = pd.DataFrame([row1, row2],
+                          columns=['player', 'score'] + [str(i) for i in range(1, self.num_turns + 1)])
+        return df
     

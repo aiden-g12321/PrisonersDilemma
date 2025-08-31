@@ -27,7 +27,7 @@ def random(opponent_moves):
 # tit-for-tat
 def tit_for_tat(opponent_moves):
     # cooperate on first turn
-    if not opponent_moves:
+    if len(opponent_moves) == 0:
         return cooperate()
     # copy opponent's last move
     else:
@@ -36,7 +36,7 @@ def tit_for_tat(opponent_moves):
 # tit-for-2-tats
 def tit_for_2_tats(opponent_moves):
     # cooperate on first turn and second turn
-    if not opponent_moves or len(opponent_moves) == 1:
+    if len(opponent_moves) == 0 or len(opponent_moves) == 1:
         return cooperate()
     # if opponent defects twice in a row, then defect
     elif opponent_moves[-1] == defect() and opponent_moves[-2] == defect():
@@ -55,7 +55,7 @@ def Friedman(opponent_moves):
 # tit-for-tat but defect 10% of time
 def Joss(opponent_moves, defect_rate=0.1):
     # cooperate first turn
-    if not opponent_moves:
+    if len(opponent_moves) == 0:
         return cooperate()
     else:
         # sometimes defect
@@ -69,7 +69,7 @@ def Joss(opponent_moves, defect_rate=0.1):
 # defect first round, if opponent retaliates then apologize and play tit-for-tat
 def Tester(opponent_moves):
     # defect first round
-    if not opponent_moves:
+    if len(opponent_moves) == 0:
         return defect()
     # cooperate second round
     elif len(opponent_moves) == 1:
